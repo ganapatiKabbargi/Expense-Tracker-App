@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./components/AuthForm/Signup";
 import CompleteProfile from "./components/CompleteProfile";
@@ -9,9 +10,25 @@ function App() {
   const authCtx = useContext(AuthContex);
   return (
     <div className="App">
-      {authCtx.isLogedIn && !authCtx.profile && <CompleteProfile />}
-      {authCtx.profile && <UpdateProfile />}
-      {!authCtx.isLogedIn && <Login />}
+      <Switch>
+        <Route path="/" exact>
+          <Login />
+        </Route>
+        <Route path="/completeProfile">
+          <CompleteProfile />
+        </Route>
+        <Route path="/updateProfile">
+          <UpdateProfile />
+        </Route>
+        {!authCtx.isLogedIn && (
+          <Route path="/auth">
+            <Login />
+          </Route>
+        )}
+        <Route path="*">
+          <Login />
+        </Route>
+      </Switch>
     </div>
   );
 }

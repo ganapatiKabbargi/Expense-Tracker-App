@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import AuthContex from "../store/auth-context";
 
 const CompleteProfile = () => {
   const authCtx = useContext(AuthContex);
-  const clickHandler = () => {
-    authCtx.completeProfile();
-  };
+ 
   return (
     <div>
       <h1>Welcome to expense tracker</h1>
@@ -15,8 +14,8 @@ const CompleteProfile = () => {
       >
         <h2 className="text-white">Your profile is incomplete</h2>
         <div>
-          <button className="btn btn-success" onClick={clickHandler}>
-            Complete Now
+          <button className="btn btn-success">
+            <Link to="/updateProfile">Complete Now</Link>
           </button>
         </div>
       </div>

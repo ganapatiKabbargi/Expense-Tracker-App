@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light shadow">
       <div className="container d-flex">
-        <a className="navbar-brand fs-2 " href="#">
+        <a className="navbar-brand fs-2 " href="#home">
           Expense Tracker
         </a>
         <button
@@ -24,17 +24,17 @@ const Navbar = () => {
         >
           <ul className="navbar-nav">
             <li className="nav-item ms-4">
-              <a className="nav-link fs-5" aria-current="page" href="#">
+              <a className="nav-link fs-5" aria-current="page" href="#home">
                 Home
               </a>
             </li>
             <li className="nav-item  ms-4">
-              <a className="nav-link fs-5" href="#">
+              <a className="nav-link fs-5" href="#home">
                 Products
               </a>
             </li>
             <li className="nav-item ms-4">
-              <a className="nav-link fs-5" href="#">
+              <a className="nav-link fs-5" href="#home">
                 About Us
               </a>
             </li>

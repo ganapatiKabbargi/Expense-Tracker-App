@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useRef, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import AuthContex from "../../store/auth-context";
 import "./Signup.css";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -10,6 +11,7 @@ const Login = () => {
   const inputPasswordRef = useRef("");
 
   const authCtx = useContext(AuthContex);
+  const history = useHistory();
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => {
@@ -56,7 +58,7 @@ const Login = () => {
       })
       .then((data) => {
         authCtx.login(data.idToken);
-        console.log(data.idToken);
+        history.replace("/completeProfile");
         console.log("user has successfully signed up");
       })
       .catch((err) => {
