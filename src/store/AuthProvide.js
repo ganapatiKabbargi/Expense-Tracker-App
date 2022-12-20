@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import AuthContex from "./auth-context";
 
 const AuthProvider = (props) => {
@@ -38,12 +39,17 @@ const AuthProvider = (props) => {
     localStorage.setItem("token", token);
   };
 
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+  };
+
   const contextValue = {
     token: token,
     isLogedIn: userLogedIn,
     displayName: displayName,
     imageUrl: photo,
     login: loginHandler,
+    logout: logoutHandler,
   };
 
   return (

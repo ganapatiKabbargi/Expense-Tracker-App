@@ -95,7 +95,7 @@ const Login = () => {
   };
   return (
     <Fragment>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="form-div shadow">
         <h2 className="text-center">{isLogin ? "Login" : "Sign Up"}</h2>
         <form onSubmit={submitHandler}>

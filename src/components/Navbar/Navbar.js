@@ -1,9 +1,15 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import AuthContex from "../../store/auth-context";
 
 const Navbar = () => {
   const authCtx = useContext(AuthContex);
+  const history = useHistory();
+
+  const logoutHandler = () => {
+    authCtx.logout();
+    history.replace("/auth");
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-light shadow">
       <div className="container d-flex">
@@ -53,6 +59,13 @@ const Navbar = () => {
                 <Link to="/updateProfile" className="nav-link fs-5 text-white">
                   Update profile
                 </Link>
+              </li>
+            )}
+            {authCtx.isLogedIn && (
+              <li className="nav-item ms-4">
+                <button className="btn " onClick={logoutHandler}>
+                  Logout
+                </button>
               </li>
             )}
           </ul>
