@@ -12,7 +12,7 @@ const Home = () => {
       <Navbar />
       {!authCtx.verified && <VerifyEmail />}
       <ExpenseForm />
-      {authCtx.expenses.length != 0 && <Expenses></Expenses>}
+      <Expenses></Expenses>
     </Fragment>
   );
 };

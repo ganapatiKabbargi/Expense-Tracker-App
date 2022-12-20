@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContex from "./auth-context";
 
@@ -9,8 +9,54 @@ const AuthProvider = (props) => {
   const [photo, setPhoto] = useState("");
   const [isVerified, setIsVerified] = useState(false);
   const [expenses, setExpenses] = useState([]);
+  const userLogedIn = !!token;
 
-  useEffect(() => {
+  const fetchExpenseFromFirebase = useCallback(async () => {
+    try {
+      const response = await fetch(
+        "https://expense-tracker-58168-default-rtdb.firebaseio.com/expenses.json"
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+      const data = await response.json();
+      const fetchedExpenses = [];
+      for (let key in data) {
+        fetchedExpenses.push({
+          id: key,
+          amount: data[key].amount,
+          description: data[key].description,
+          category: data[key].category,
+        });
+      }
+      setExpenses(fetchedExpenses);
+    } catch (err) {
+      alert(err.message);
+    }
+  }, []);
+
+  const addExpenseToFirebase = async (expense) => {
+    try {
+      const response = await fetch(
+        "https://expense-tracker-58168-default-rtdb.firebaseio.com/expenses.json",
+        {
+          method: "POST",
+          body: JSON.stringify(expense),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        fetchExpenseFromFirebase();
+      }
+      const data = await response.json();
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  const fetchAccountDetails = () => {
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAbpLNr_eEETNGNveU64MVJ1lJtYvkP9bM",
       {
@@ -31,11 +77,17 @@ const AuthProvider = (props) => {
         });
       })
       .catch((err) => {
-        alert(err.error.message);
+        alert(err.message);
       });
-  }, [token]);
+  };
 
-  const userLogedIn = !!token;
+  useEffect(() => {
+    fetchExpenseFromFirebase();
+  }, [fetchExpenseFromFirebase]);
+
+  useEffect(() => {
+    fetchAccountDetails();
+  }, [token]);
 
   const loginHandler = (token) => {
     setToken(token);
@@ -47,9 +99,7 @@ const AuthProvider = (props) => {
   };
 
   const addExpenseHandler = (expense) => {
-    setExpenses((prev) => {
-      return [...prev, expense];
-    });
+    addExpenseToFirebase(expense);
   };
 
   const contextValue = {
@@ -62,6 +112,7 @@ const AuthProvider = (props) => {
     login: loginHandler,
     logout: logoutHandler,
     addExpense: addExpenseHandler,
+    fetchExpense: fetchExpenseFromFirebase,
   };
 
   return (

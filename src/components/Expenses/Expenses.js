@@ -4,12 +4,12 @@ import Expense from "../Expense/Expense";
 
 const Expenses = () => {
   const authCtx = useContext(AuthContex);
-  console.log(authCtx.expenses);
   let total = 0;
   let expensess = authCtx.expenses.map((expense) => {
     total = total + +expense.amount;
     return (
       <Expense
+        key={expense.id}
         amount={expense.amount}
         description={expense.description}
         category={expense.category}

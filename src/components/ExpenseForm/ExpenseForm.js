@@ -7,6 +7,7 @@ const ExpenseForm = () => {
   const inputAmountRef = useRef("");
   const inputDescriptionRef = useRef("");
   const inputCategoryRef = useRef("");
+
   const submitHandler = (e) => {
     e.preventDefault();
     const expense = {
