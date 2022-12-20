@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import "./App.css";
+import PasswordReset from "./components/AuthForm/PasswordReset";
 import Login from "./components/AuthForm/Signup";
 import Home from "./components/pages/Home";
 import UpdateProfile from "./components/UpdateProfile";
@@ -25,6 +26,9 @@ function App() {
             <Login />
           </Route>
         )}
+        <Route path="/password">
+          <PasswordReset></PasswordReset>
+        </Route>
         <Route path="*">
           <Login />
         </Route>

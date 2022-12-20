@@ -7,6 +7,7 @@ const AuthProvider = (props) => {
   const [token, setToken] = useState(initialToken);
   const [displayName, setDisplayName] = useState("");
   const [photo, setPhoto] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
     fetch(
@@ -23,8 +24,10 @@ const AuthProvider = (props) => {
     )
       .then((response) => {
         return response.json().then((data) => {
+          console.log(data);
           setDisplayName(data.users[0].displayName);
           setPhoto(data.users[0].photoUrl);
+          setIsVerified(data.users[0].emailVerified);
         });
       })
       .catch((err) => {
@@ -48,6 +51,7 @@ const AuthProvider = (props) => {
     isLogedIn: userLogedIn,
     displayName: displayName,
     imageUrl: photo,
+    verified: isVerified,
     login: loginHandler,
     logout: logoutHandler,
   };

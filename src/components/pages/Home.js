@@ -38,9 +38,14 @@ const Home = () => {
     <Fragment>
       <Navbar />
       <div className="text-center mt-5 ">
-        <button className="btn btn-outline-primary w-50" onClick={clickHandler}>
-          Verify Email
-        </button>
+        {!authCtx.verified && (
+          <button
+            className="btn btn-outline-primary w-50"
+            onClick={clickHandler}
+          >
+            Verify Email
+          </button>
+        )}
       </div>
     </Fragment>
   );

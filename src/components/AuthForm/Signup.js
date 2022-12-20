@@ -3,6 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import AuthContex from "../../store/auth-context";
 import "./Signup.css";
 import { useHistory } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -93,6 +94,10 @@ const Login = () => {
         });
     }
   };
+
+  const passwordHandler = () => {
+    history.push("/password");
+  };
   return (
     <Fragment>
       {/* <Navbar /> */}
@@ -119,7 +124,9 @@ const Login = () => {
         </form>
         {isLogin && (
           <div className="text-center mt-2">
-            <button className="btn ">Forget password?</button>
+            <button className="btn " onClick={passwordHandler}>
+              Forget password?
+            </button>
           </div>
         )}
         <div className="text-center mt-2">
