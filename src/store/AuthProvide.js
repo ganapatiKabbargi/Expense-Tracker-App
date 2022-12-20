@@ -8,6 +8,7 @@ const AuthProvider = (props) => {
   const [displayName, setDisplayName] = useState("");
   const [photo, setPhoto] = useState("");
   const [isVerified, setIsVerified] = useState(false);
+  const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
     fetch(
@@ -24,7 +25,6 @@ const AuthProvider = (props) => {
     )
       .then((response) => {
         return response.json().then((data) => {
-          console.log(data);
           setDisplayName(data.users[0].displayName);
           setPhoto(data.users[0].photoUrl);
           setIsVerified(data.users[0].emailVerified);
@@ -46,14 +46,22 @@ const AuthProvider = (props) => {
     localStorage.removeItem("token");
   };
 
+  const addExpenseHandler = (expense) => {
+    setExpenses((prev) => {
+      return [...prev, expense];
+    });
+  };
+
   const contextValue = {
     token: token,
     isLogedIn: userLogedIn,
     displayName: displayName,
     imageUrl: photo,
     verified: isVerified,
+    expenses: expenses,
     login: loginHandler,
     logout: logoutHandler,
+    addExpense: addExpenseHandler,
   };
 
   return (

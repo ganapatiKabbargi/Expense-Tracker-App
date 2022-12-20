@@ -48,22 +48,22 @@ const Navbar = () => {
               </a>
             </li>
             {authCtx.isLogedIn && !authCtx.displayName && (
-              <li className="nav-item ms-4 bg-success rounded">
-                <Link to="/updateProfile" className="nav-link fs-5 text-white">
+              <li className="nav-item ms-4  rounded">
+                <Link to="/updateProfile" className="nav-link fs-5 ">
                   Complete profile
                 </Link>
               </li>
             )}
             {authCtx.isLogedIn && authCtx.displayName && (
-              <li className="nav-item ms-4 bg-primary rounded">
-                <Link to="/updateProfile" className="nav-link fs-5 text-white">
+              <li className="nav-item ms-4  rounded">
+                <Link to="/updateProfile" className="nav-link fs-5 ">
                   Update profile
                 </Link>
               </li>
             )}
             {authCtx.isLogedIn && (
               <li className="nav-item ms-4">
-                <button className="btn " onClick={logoutHandler}>
+                <button className="btn fs-5" onClick={logoutHandler}>
                   Logout
                 </button>
               </li>

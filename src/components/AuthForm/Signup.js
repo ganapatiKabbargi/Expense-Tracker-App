@@ -101,16 +101,21 @@ const Login = () => {
   return (
     <Fragment>
       {/* <Navbar /> */}
-      <div className="form-div shadow">
+      <div className="form-div shadow ">
         <h2 className="text-center">{isLogin ? "Login" : "Sign Up"}</h2>
         <form onSubmit={submitHandler}>
           <div className="control">
             <label>Email</label>
-            <input type="email" required ref={inputEmailRef} />
+            <input type="email" required ref={inputEmailRef} defaultValue="" />
           </div>
           <div className="control">
             <label>Password</label>
-            <input type="password" required ref={inputPasswordRef} />
+            <input
+              type="password"
+              required
+              ref={inputPasswordRef}
+              defaultValue=""
+            />
           </div>
           {!isLogin && (
             <div className="control">
@@ -118,19 +123,21 @@ const Login = () => {
               <input type="password" required></input>
             </div>
           )}
-          <div className="actions">
-            <button>{isLogin ? "Login" : "SignUp"}</button>
+          <div className="actions ">
+            <button className="btn btn-primary w-100">
+              {isLogin ? "Login" : "SignUp"}
+            </button>
           </div>
         </form>
         {isLogin && (
           <div className="text-center mt-2">
-            <button className="btn " onClick={passwordHandler}>
+            <button className="btn btn-light " onClick={passwordHandler}>
               Forget password?
             </button>
           </div>
         )}
         <div className="text-center mt-2">
-          <button className="btn " onClick={switchAuthModeHandler}>
+          <button className="btn btn-light" onClick={switchAuthModeHandler}>
             {isLogin
               ? "Dont have an account? Signup"
               : "Already have an account? Login"}

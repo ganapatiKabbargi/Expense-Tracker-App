@@ -9,6 +9,10 @@ const UpdateProfile = () => {
   const inputNameRef = useRef("");
   const inputImageRef = useRef("");
 
+  const clickHandler = () => {
+    history.push("/home");
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     const enteredName = inputNameRef.current.value;
@@ -41,7 +45,7 @@ const UpdateProfile = () => {
       .then((data) => {
         console.log(data);
         alert("profile updated successfully");
-        history.replace("/home");
+        // history.push("/home");
       })
       .catch((err) => {
         alert(err.message);
@@ -51,7 +55,12 @@ const UpdateProfile = () => {
   return (
     <div className="bg-light w-50 mt-5 mx-auto p-4 shadow rounded ">
       <form onSubmit={submitHandler}>
-        <h2>Contact Details</h2>
+        <div className="d-flex justify-content-between ">
+          <h2>Contact Details</h2>
+          <button className="btn btn-outline-primary" onClick={clickHandler}>
+            X
+          </button>
+        </div>
         <div className="mb-3">
           <label htmlFor="formGroupExampleInput" className="form-label">
             Full Name
@@ -80,6 +89,12 @@ const UpdateProfile = () => {
         </div>
         <div>
           <button className="btn btn-outline-primary mt-2 w-25">Update</button>
+          <button
+            className="btn btn-outline-success ms-5 mt-2 w-25"
+            onClick={clickHandler}
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>
