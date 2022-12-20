@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./components/AuthForm/Signup";
-import CompleteProfile from "./components/CompleteProfile";
+import Home from "./components/pages/Home";
 import UpdateProfile from "./components/UpdateProfile";
 import AuthContex from "./store/auth-context";
 
@@ -14,8 +14,8 @@ function App() {
         <Route path="/" exact>
           <Login />
         </Route>
-        <Route path="/completeProfile">
-          <CompleteProfile />
+        <Route path="/home">
+          <Home />
         </Route>
         <Route path="/updateProfile">
           <UpdateProfile />

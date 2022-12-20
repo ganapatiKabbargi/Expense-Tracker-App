@@ -1,8 +1,10 @@
 import React, { useContext, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import AuthContex from "../store/auth-context";
 
 const UpdateProfile = () => {
   const authCtx = useContext(AuthContex);
+  const history = useHistory();
 
   const inputNameRef = useRef("");
   const inputImageRef = useRef("");
@@ -39,6 +41,7 @@ const UpdateProfile = () => {
       .then((data) => {
         console.log(data);
         alert("profile updated successfully");
+        history.replace("/home");
       })
       .catch((err) => {
         alert(err.message);

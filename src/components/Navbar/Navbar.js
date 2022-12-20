@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import AuthContex from "../../store/auth-context";
 
 const Navbar = () => {
+  const authCtx = useContext(AuthContex);
   return (
     <nav className="navbar navbar-expand-lg navbar-light shadow">
       <div className="container d-flex">
@@ -38,6 +41,20 @@ const Navbar = () => {
                 About Us
               </a>
             </li>
+            {authCtx.isLogedIn && !authCtx.displayName && (
+              <li className="nav-item ms-4 bg-success rounded">
+                <Link to="/updateProfile" className="nav-link fs-5 text-white">
+                  Complete profile
+                </Link>
+              </li>
+            )}
+            {authCtx.isLogedIn && authCtx.displayName && (
+              <li className="nav-item ms-4 bg-primary rounded">
+                <Link to="/updateProfile" className="nav-link fs-5 text-white">
+                  Update profile
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
