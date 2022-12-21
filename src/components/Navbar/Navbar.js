@@ -32,21 +32,6 @@ const Navbar = () => {
           id="navbarNav"
         >
           <ul className="navbar-nav">
-            <li className="nav-item ms-4">
-              <a className="nav-link fs-5" aria-current="page" href="#home">
-                Home
-              </a>
-            </li>
-            <li className="nav-item  ms-4">
-              <a className="nav-link fs-5" href="#home">
-                Products
-              </a>
-            </li>
-            <li className="nav-item ms-4">
-              <a className="nav-link fs-5" href="#home">
-                About Us
-              </a>
-            </li>
             {authCtx.isLogedIn && !authCtx.displayName && (
               <li className="nav-item ms-4  rounded">
                 <Link to="/updateProfile" className="nav-link fs-5 ">
