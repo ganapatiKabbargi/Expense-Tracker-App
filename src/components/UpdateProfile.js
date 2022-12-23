@@ -1,10 +1,12 @@
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import AuthContex from "../store/auth-context";
 
 const UpdateProfile = () => {
-  const authCtx = useContext(AuthContex);
   const history = useHistory();
+  const displayName = useSelector((state) => state.auth.displayName);
+  const photo = useSelector((state) => state.auth.photo);
+  const token = useSelector((state) => state.auth.bearerToken);
 
   const inputNameRef = useRef("");
   const inputImageRef = useRef("");
@@ -23,7 +25,7 @@ const UpdateProfile = () => {
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: authCtx.token,
+          idToken: token,
           displayName: enteredName,
           photoUrl: enteredImage,
           deleteAttribute: [],
@@ -71,7 +73,7 @@ const UpdateProfile = () => {
             id="formGroupExampleInput"
             required
             ref={inputNameRef}
-            defaultValue={authCtx.displayName}
+            defaultValue={displayName}
           />
         </div>
         <div className="mb-3">
@@ -84,7 +86,7 @@ const UpdateProfile = () => {
             id="formGroupExampleInput2"
             required
             ref={inputImageRef}
-            defaultValue={authCtx.imageUrl}
+            defaultValue={photo}
           />
         </div>
         <div>

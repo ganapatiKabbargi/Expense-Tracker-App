@@ -41,14 +41,24 @@ const PasswordReset = () => {
         alert(err.messsage);
       });
   };
+
+  const clickHandler = () => {
+    history.push("/auth");
+  };
   return (
     <div className="form-div shadow bg-light">
+      <div className="d-flex justify-content-between mb-5">
+        <h2>Reset Password</h2>
+        <button className="btn btn-outline-primary" onClick={clickHandler}>
+          X
+        </button>
+      </div>
       <form onSubmit={submitHandler}>
         <div className="control">
           <label className="text-success">Enter Your Email</label>
           <input type="email" required ref={inputEmailRef} />
         </div>
-        <button className="btn bg-success text-white w-100">
+        <button className="btn bg-primary text-white w-100">
           {loading ? "sending Link to mail" : "Reset Password"}
         </button>
       </form>

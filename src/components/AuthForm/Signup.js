@@ -1,17 +1,17 @@
-import React, { Fragment, useContext, useRef, useState } from "react";
-import Navbar from "../Navbar/Navbar";
-import AuthContex from "../../store/auth-context";
+import React, { Fragment, useRef, useState } from "react";
+
 import "./Signup.css";
 import { useHistory } from "react-router-dom";
-import { Redirect, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/authSlice";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const dispatch = useDispatch();
 
   const inputEmailRef = useRef("");
   const inputPasswordRef = useRef("");
 
-  const authCtx = useContext(AuthContex);
   const history = useHistory();
 
   const switchAuthModeHandler = () => {
@@ -52,7 +52,7 @@ const Login = () => {
           }
         })
         .then((data) => {
-          authCtx.login(data.idToken);
+          dispatch(authActions.login(data.idToken));
           history.replace("/home");
         })
         .catch((err) => {
@@ -85,7 +85,6 @@ const Login = () => {
           }
         })
         .then((data) => {
-          authCtx.login(data.idToken);
           switchAuthModeHandler();
           console.log("user has successfully signed up");
         })

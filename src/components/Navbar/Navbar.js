@@ -1,15 +1,20 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import AuthContex from "../../store/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../store/authSlice";
 
 const Navbar = () => {
-  const authCtx = useContext(AuthContex);
   const history = useHistory();
+  const isLogedIn = useSelector((state) => state.auth.isLogedIn);
+  const primium = useSelector((state) => state.expense.premium);
+  const displayName = useSelector((state) => state.auth.displayName);
+  const dispatch = useDispatch();
 
   const logoutHandler = () => {
-    authCtx.logout();
+    dispatch(authActions.logout());
     history.replace("/auth");
   };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light shadow">
       <div className="container d-flex">
@@ -32,25 +37,31 @@ const Navbar = () => {
           id="navbarNav"
         >
           <ul className="navbar-nav">
-            {authCtx.isLogedIn && !authCtx.displayName && (
+            {isLogedIn && !displayName && (
               <li className="nav-item ms-4  rounded">
                 <Link to="/updateProfile" className="nav-link fs-5 ">
                   Complete profile
                 </Link>
               </li>
             )}
-            {authCtx.isLogedIn && authCtx.displayName && (
+            {isLogedIn && displayName && (
               <li className="nav-item ms-4  rounded">
                 <Link to="/updateProfile" className="nav-link fs-5 ">
                   Update profile
                 </Link>
               </li>
             )}
-            {authCtx.isLogedIn && (
+            {isLogedIn && (
               <li className="nav-item ms-4">
                 <button className="btn fs-5" onClick={logoutHandler}>
                   Logout
                 </button>
+              </li>
+            )}
+
+            {primium && (
+              <li className="nav-item ms-4">
+                <button className="btn fs-5 bg-success">Premium</button>
               </li>
             )}
           </ul>

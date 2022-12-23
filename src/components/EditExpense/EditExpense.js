@@ -1,12 +1,58 @@
-import React, { useContext, useRef } from "react";
-import AuthContex from "../../store/auth-context";
+import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { expenseActions } from "../../store/expenseSlice";
 import "./EditExpense.css";
 
 const EditExpense = () => {
-  const authCtx = useContext(AuthContex);
+  const id = useSelector((state) => state.expense.id);
+  const dispatch = useDispatch();
   const inputAmountRef = useRef("");
   const inputDescriptionRef = useRef("");
   const inputCategoryRef = useRef("");
+
+  const fetchExpenseFromFirebase = async () => {
+    try {
+      const response = await fetch(
+        "https://expense-tracker-58168-default-rtdb.firebaseio.com/expenses.json"
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+      const data = await response.json();
+      const fetchedExpenses = [];
+      for (let key in data) {
+        fetchedExpenses.push({
+          id: key,
+          amount: data[key].amount,
+          description: data[key].description,
+          category: data[key].category,
+        });
+      }
+      dispatch(expenseActions.addExpense(fetchedExpenses));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const editExpenseInFirebase = async (expense) => {
+    try {
+      const response = await fetch(
+        `https://expense-tracker-58168-default-rtdb.firebaseio.com/expenses/${id}.json`,
+        {
+          method: "PUT",
+          body: JSON.stringify(expense),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        fetchExpenseFromFirebase();
+      }
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -16,10 +62,11 @@ const EditExpense = () => {
       category: inputCategoryRef.current.value,
     };
 
-    authCtx.editExpense(expense);
+    editExpenseInFirebase(expense);
+    dispatch(expenseActions.hideEditForm());
   };
   const clickHandler = () => {
-    authCtx.hideEdit();
+    dispatch(expenseActions.hideEditForm());
   };
   return (
     <div className="edit-div shadow ">

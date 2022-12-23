@@ -1,12 +1,16 @@
 import React, { Fragment, useContext } from "react";
-import AuthContex from "../../store/auth-context";
-import EditExpense from "../EditExpense/EditExpense";
+import { useSelector, useDispatch } from "react-redux";
+import { expenseActions } from "../../store/expenseSlice";
+
 import Expense from "../Expense/Expense";
 
 const Expenses = () => {
-  const authCtx = useContext(AuthContex);
+  // const authCtx = useContext(AuthContex);
+  const expenses = useSelector((state) => state.expense.expenses);
+  const dispatch = useDispatch();
   let total = 0;
-  let expensess = authCtx.expenses.map((expense) => {
+
+  let expensess = expenses.map((expense) => {
     total = total + +expense.amount;
     return (
       <Expense
@@ -18,6 +22,12 @@ const Expenses = () => {
       ></Expense>
     );
   });
+  if (total > 10000) {
+    dispatch(expenseActions.premium());
+  } else {
+    dispatch(expenseActions.nonPrime());
+  }
+
   return (
     <Fragment>
       <div

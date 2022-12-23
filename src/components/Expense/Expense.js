@@ -1,14 +1,59 @@
 import React, { Fragment, useContext } from "react";
-import AuthContex from "../../store/auth-context";
+import { useDispatch } from "react-redux";
+import { expenseActions } from "../../store/expenseSlice";
 
 const Expense = (props) => {
-  const authCtx = useContext(AuthContex);
+  const dispatch = useDispatch();
+
+  const fetchExpenseFromFirebase = async () => {
+    try {
+      const response = await fetch(
+        "https://expense-tracker-58168-default-rtdb.firebaseio.com/expenses.json"
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+      const data = await response.json();
+      const fetchedExpenses = [];
+      for (let key in data) {
+        fetchedExpenses.push({
+          id: key,
+          amount: data[key].amount,
+          description: data[key].description,
+          category: data[key].category,
+        });
+      }
+      dispatch(expenseActions.addExpense(fetchedExpenses));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const removeExpenseFromFirebase = async (id) => {
+    try {
+      const response = await fetch(
+        `https://expense-tracker-58168-default-rtdb.firebaseio.com/expenses/${id}.json`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        fetchExpenseFromFirebase();
+      }
+      const data = response.json();
+      console.log("expense deleted successfully");
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   const removeHandler = () => {
-    authCtx.removeExpense(props.id);
+    removeExpenseFromFirebase(props.id);
   };
 
   const editHandler = () => {
-    authCtx.showEdit(props.id);
+    dispatch(expenseActions.showEditForm());
+    dispatch(expenseActions.setId(props.id));
   };
   return (
     <Fragment>

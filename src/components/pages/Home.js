@@ -1,5 +1,5 @@
-import React, { Fragment, useContext } from "react";
-import AuthContex from "../../store/auth-context";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
 import VerifyEmail from "../AuthForm/VerifyEmail";
 import EditExpense from "../EditExpense/EditExpense";
 import ExpenseForm from "../ExpenseForm/ExpenseForm";
@@ -7,14 +7,15 @@ import Expenses from "../Expenses/Expenses";
 import Navbar from "../Navbar/Navbar";
 
 const Home = () => {
-  const authCtx = useContext(AuthContex);
+  const verified = useSelector((state) => state.auth.isVerified);
+  const show = useSelector((state) => state.expense.showForm);
   return (
     <Fragment>
       <Navbar />
-      {!authCtx.verified && <VerifyEmail />}
-      {authCtx.verified && <ExpenseForm />}
-      {authCtx.edit && <EditExpense></EditExpense>}
-      {authCtx.verified && <Expenses></Expenses>}
+      {!verified && <VerifyEmail />}
+      {verified && <ExpenseForm />}
+      {show && <EditExpense></EditExpense>}
+      {verified && <Expenses></Expenses>}
     </Fragment>
   );
 };
