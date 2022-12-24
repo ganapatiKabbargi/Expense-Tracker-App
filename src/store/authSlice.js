@@ -18,10 +18,12 @@ const authSlice = createSlice({
   reducers: {
     login(state, action) {
       localStorage.setItem("token", action.payload);
+      state.isLogedIn = true;
     },
-    logout() {
+    logout(state) {
       localStorage.removeItem("token");
       localStorage.removeItem("verified");
+      state.isLogedIn = false;
     },
     setDisplayName(state, action) {
       state.displayName = action.payload;

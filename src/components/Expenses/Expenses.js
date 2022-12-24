@@ -1,12 +1,14 @@
 import React, { Fragment, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { expenseActions } from "../../store/expenseSlice";
+import { themeActions } from "../../store/themeSlice";
 
 import Expense from "../Expense/Expense";
 
 const Expenses = () => {
   // const authCtx = useContext(AuthContex);
   const expenses = useSelector((state) => state.expense.expenses);
+  const toggle = useSelector((state) => state.theme.toggle);
   const dispatch = useDispatch();
   let total = 0;
 
@@ -23,9 +25,9 @@ const Expenses = () => {
     );
   });
   if (total > 10000) {
-    dispatch(expenseActions.premium());
+    dispatch(themeActions.premium());
   } else {
-    dispatch(expenseActions.nonPrime());
+    dispatch(themeActions.nonPrime());
   }
 
   return (

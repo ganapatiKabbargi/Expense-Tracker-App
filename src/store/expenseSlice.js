@@ -4,7 +4,7 @@ const initialExpenseState = {
   expenses: [],
   showForm: false,
   id: "",
-  premium: false,
+  // premium: false,
 };
 const expenseSlice = createSlice({
   name: "expense",
@@ -12,6 +12,7 @@ const expenseSlice = createSlice({
   reducers: {
     addExpense(state, action) {
       state.expenses = [...action.payload];
+      console.log(state.expenses);
     },
     showEditForm(state, action) {
       state.showForm = true;
@@ -22,12 +23,12 @@ const expenseSlice = createSlice({
     setId(state, action) {
       state.id = action.payload;
     },
-    premium(state) {
-      state.premium = true;
-    },
-    nonPrime(state) {
-      state.premium = false;
-    },
+    // premium(state) {
+    //   state.premium = true;
+    // },
+    // nonPrime(state) {
+    //   state.premium = false;
+    // },
   },
 });
 

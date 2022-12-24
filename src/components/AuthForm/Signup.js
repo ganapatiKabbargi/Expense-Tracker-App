@@ -1,12 +1,14 @@
 import React, { Fragment, useRef, useState } from "react";
+import Navbar from "../Navbar/Navbar";
 
 import "./Signup.css";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/authSlice";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const toggle = useSelector((state) => state.theme.toggle);
   const dispatch = useDispatch();
 
   const inputEmailRef = useRef("");
@@ -86,6 +88,8 @@ const Login = () => {
         })
         .then((data) => {
           switchAuthModeHandler();
+          inputEmailRef.current.value = "";
+          inputPasswordRef.current.value = "";
           console.log("user has successfully signed up");
         })
         .catch((err) => {
@@ -99,22 +103,17 @@ const Login = () => {
   };
   return (
     <Fragment>
-      {/* <Navbar /> */}
-      <div className="form-div shadow ">
+      <Navbar />
+      <div className={toggle ? "form-div shadow " : "form-div shadow light"}>
         <h2 className="text-center">{isLogin ? "Login" : "Sign Up"}</h2>
         <form onSubmit={submitHandler}>
           <div className="control">
             <label>Email</label>
-            <input type="email" required ref={inputEmailRef} defaultValue="" />
+            <input type="email" required ref={inputEmailRef} />
           </div>
           <div className="control">
             <label>Password</label>
-            <input
-              type="password"
-              required
-              ref={inputPasswordRef}
-              defaultValue=""
-            />
+            <input type="password" required ref={inputPasswordRef} />
           </div>
           {!isLogin && (
             <div className="control">

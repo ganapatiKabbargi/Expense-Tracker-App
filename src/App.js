@@ -10,6 +10,7 @@ import { authActions } from "./store/authSlice";
 
 function App() {
   const token = useSelector((state) => state.auth.bearerToken);
+  const toggle = useSelector((state) => state.theme.toggle);
   const dispatch = useDispatch();
   const fetchAccountDetails = useCallback(() => {
     fetch(
@@ -43,7 +44,7 @@ function App() {
   }, [token]);
   const isLogedIn = useSelector((state) => state.auth.isLogedIn);
   return (
-    <div className="App">
+    <div className={toggle ? "dark" : "App"}>
       <Switch>
         <Route path="/" exact>
           <Login />
