@@ -3,7 +3,6 @@
   width: 95%;
   max-width: 55rem;
   border-radius: 6px;
-  background-color: #e63838;
   padding: 1rem;
   color: white;
 }
@@ -61,4 +60,5 @@
   color: white;
   border-radius: 4px;
   padding: 0.5rem 2.5rem;
+  background-color: rgb(52, 102, 90);
 }

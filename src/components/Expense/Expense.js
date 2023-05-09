@@ -1,54 +1,15 @@
-import React, { Fragment, useContext } from "react";
-import { useDispatch } from "react-redux";
+import React, { Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { expenseActions } from "../../store/expenseSlice";
-
+import { removeExpenseFromFirebase } from "../../store/expense-actions";
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 const Expense = (props) => {
+  const email = useSelector((state) => state.auth.email);
   const dispatch = useDispatch();
 
-  const fetchExpenseFromFirebase = async () => {
-    try {
-      const response = await fetch(
-        "https://expense-tracker-58168-default-rtdb.firebaseio.com/expenses.json"
-      );
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-      const data = await response.json();
-      const fetchedExpenses = [];
-      for (let key in data) {
-        fetchedExpenses.push({
-          id: key,
-          amount: data[key].amount,
-          description: data[key].description,
-          category: data[key].category,
-        });
-      }
-      dispatch(expenseActions.addExpense(fetchedExpenses));
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  const removeExpenseFromFirebase = async (id) => {
-    try {
-      const response = await fetch(
-        `https://expense-tracker-58168-default-rtdb.firebaseio.com/expenses/${id}.json`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (response.ok) {
-        fetchExpenseFromFirebase();
-      }
-      const data = response.json();
-      console.log("expense deleted successfully");
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
   const removeHandler = () => {
-    removeExpenseFromFirebase(props.id);
+    dispatch(removeExpenseFromFirebase(props.id, email));
   };
 
   const editHandler = () => {
@@ -57,9 +18,11 @@ const Expense = (props) => {
   };
   return (
     <Fragment>
-      <div
+      <li
         className="d-flex justify-content-between w-100 m-auto my-2 p-2 rounded shadow text-white fs-5"
-        style={{ backgroundColor: "#e64738" }}
+        style={{
+          background: "linear-gradient(to top left, #141e30 , #243b55 )",
+        }}
       >
         <div className=" ms-2" style={{ width: "200px" }}>
           {props.description}
@@ -71,18 +34,18 @@ const Expense = (props) => {
           {props.amount}
         </div>
         <div>
-          <button className="btn btn-success me-2" onClick={editHandler}>
-            Edit
+          <button className="btn text-success me-2" onClick={editHandler}>
+            <FaEdit size={"23px"} />
           </button>
           <button
-            className="btn btn-secondary me-2"
-            style={{ backgroundColor: "" }}
+            className="btn  me-2 "
+            style={{ color: " #e63838" }}
             onClick={removeHandler}
           >
-            Delete
+            <MdDelete size={"23px"} />
           </button>
         </div>
-      </div>
+      </li>
     </Fragment>
   );
 };

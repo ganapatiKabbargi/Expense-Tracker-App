@@ -1,47 +1,39 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import PasswordReset from "./components/AuthForm/PasswordReset";
 import Login from "./components/AuthForm/Signup";
+import VerifyEmail from "./components/AuthForm/VerifyEmail";
 import Home from "./components/pages/Home";
 import UpdateProfile from "./components/UpdateProfile";
-import { authActions } from "./store/authSlice";
+import { themeActions } from "./store/themeSlice";
+import { fetchDetails } from "./store/auth-actions";
 
 function App() {
   const token = useSelector((state) => state.auth.bearerToken);
   const toggle = useSelector((state) => state.theme.toggle);
+  const email = useSelector((state) => state.auth.email);
+  const verified = useSelector((state) => state.auth.user.emailVerified);
+
   const dispatch = useDispatch();
-  const fetchAccountDetails = useCallback(() => {
-    fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAbpLNr_eEETNGNveU64MVJ1lJtYvkP9bM",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          idToken: token,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) => {
-        return response.json().then((data) => {
-          dispatch(authActions.setDisplayName(data.users[0].displayName));
-          dispatch(authActions.setPhoto(data.users[0].photoUrl));
-          dispatch(authActions.setIsVerified(data.users[0].emailVerified));
-          console.log("hi");
-          console.log(data.users[0].emailVerified);
-        });
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  }, []);
+
+  console.log("App RUNNUNG...");
 
   useEffect(() => {
-    fetchAccountDetails();
+    console.log("inside useEffect..");
+    console.log(localStorage.getItem("email"));
+    if (localStorage.getItem(email + "prime")) {
+      dispatch(themeActions.premium());
+    }
+    if (localStorage.getItem(email + "theme")) {
+      dispatch(themeActions.showToggle());
+    }
+    if (token) {
+      dispatch(fetchDetails(token));
+    }
   }, [token]);
+
   const isLogedIn = useSelector((state) => state.auth.isLogedIn);
   return (
     <div className={toggle ? "dark" : "App"}>
@@ -49,17 +41,24 @@ function App() {
         <Route path="/" exact>
           <Login />
         </Route>
+        {isLogedIn && (
+          <Route path="/verify">
+            <VerifyEmail />
+          </Route>
+        )}
         <Route path="/home">
           <Home />
         </Route>
-        <Route path="/updateProfile">
-          <UpdateProfile />
-        </Route>
-        {isLogedIn && (
-          <Route path="/auth">
-            <Login />
+        {isLogedIn && verified && (
+          <Route path="/updateProfile">
+            <UpdateProfile />
           </Route>
         )}
+
+        <Route path="/auth">
+          <Login />
+        </Route>
+
         <Route path="/password">
           <PasswordReset></PasswordReset>
         </Route>

@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const toggleBtn = localStorage.getItem("toggleBtn");
-const prime = localStorage.getItem("prime");
 const initialThemeState = {
-  togglebtn: toggleBtn,
+  togglebtn: false,
   toggle: false,
-  premium: prime,
+  premium: false,
+  loader: false,
+  Notification: false,
 };
 const themeSlice = createSlice({
   name: "theme",
@@ -13,18 +13,24 @@ const themeSlice = createSlice({
   reducers: {
     showToggle(state) {
       state.togglebtn = true;
-      localStorage.setItem("toggleBtn", true);
     },
     switchToggle(state) {
       state.toggle = !state.toggle;
     },
     premium(state) {
       state.premium = true;
-      localStorage.setItem("prime", true);
     },
-    nonPrime(state) {
-      localStorage.removeItem("toggleBtn");
-      localStorage.removeItem("prime");
+    showLoader(state) {
+      state.loader = true;
+    },
+    hideLoader(state) {
+      state.loader = false;
+    },
+    showNotification(state) {
+      state.Notification = true;
+    },
+    hideNotification(state) {
+      state.Notification = false;
     },
   },
 });

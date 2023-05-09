@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialToken = localStorage.getItem("token");
-const initialVerified = localStorage.getItem("verified");
-const userLogedIn = !!initialToken;
+// const initialToken = localStorage.getItem("token");
+// const initialMail = localStorage.getItem("email");
+// const userLogedIn = !!initialToken;
 
 const initialAuthState = {
-  isLogedIn: userLogedIn,
-  bearerToken: initialToken,
-  displayName: "",
-  photo: "",
-  isVerified: initialVerified,
+  // isLogedIn: userLogedIn,
+  bearerToken: localStorage.getItem("token"),
+  email: localStorage.getItem("email"),
+  user: {},
+  isLogedIn: !!localStorage.getItem("token"),
 };
 
 const authSlice = createSlice({
@@ -17,23 +17,22 @@ const authSlice = createSlice({
   initialState: initialAuthState,
   reducers: {
     login(state, action) {
-      localStorage.setItem("token", action.payload);
       state.isLogedIn = true;
+      state.bearerToken = action.payload.idToken;
+      state.email = action.payload.email.replace(/[.]/g, "");
+      localStorage.setItem("email", action.payload.email.replace(/[.]/g, ""));
+      localStorage.setItem("token", action.payload.idToken);
     },
     logout(state) {
       localStorage.removeItem("token");
-      localStorage.removeItem("verified");
+      localStorage.removeItem("email");
+      state.bearerToken = null;
+      state.email = "";
+      state.user = {};
       state.isLogedIn = false;
     },
-    setDisplayName(state, action) {
-      state.displayName = action.payload;
-    },
-    setPhoto(state, action) {
-      state.photo = action.payload;
-    },
-    setIsVerified(state, action) {
-      state.isVerified = action.payload;
-      localStorage.setItem("verified", action.payload);
+    setUser(state, action) {
+      state.user = action.payload;
     },
   },
 });

@@ -14,7 +14,7 @@ const PasswordReset = () => {
     setLoading(true);
     const enteredEmail = inputEmailRef.current.value;
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAbpLNr_eEETNGNveU64MVJ1lJtYvkP9bM",
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCdAt2TovMTe4PkgyCuLYXvHQK7AgVi-YI",
       {
         method: "POST",
         body: JSON.stringify({
@@ -51,23 +51,19 @@ const PasswordReset = () => {
   return (
     <Fragment>
       <Navbar />
-      <div
-        className={
-          toggle ? "form-div shadow bg-light" : "form-div shadow light"
-        }
-      >
+      <div className={toggle ? "form-div shadow " : "form-div shadow light"}>
         <div className="d-flex justify-content-between mb-5">
           <h2>Reset Password</h2>
-          <button className="btn btn-outline-primary" onClick={clickHandler}>
+          <button className="btn  fs-4" onClick={clickHandler}>
             X
           </button>
         </div>
         <form onSubmit={submitHandler}>
           <div className="control">
-            <label className="text-success">Enter Your Email</label>
+            <label className="text-white">Enter Your Registered Email</label>
             <input type="email" required ref={inputEmailRef} />
           </div>
-          <button className="btn bg-primary text-white w-100">
+          <button className="btn shadow text-white w-100">
             {loading ? "sending Link to mail" : "Reset Password"}
           </button>
         </form>

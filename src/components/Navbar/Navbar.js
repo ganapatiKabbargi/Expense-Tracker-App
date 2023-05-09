@@ -3,17 +3,26 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/authSlice";
 import { themeActions } from "../../store/themeSlice";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import { CgProfile } from "react-icons/cg";
+import { CgDarkMode } from "react-icons/cg";
+import { HiDownload } from "react-icons/hi";
 
 const Navbar = () => {
   const history = useHistory();
   const isLogedIn = useSelector((state) => state.auth.isLogedIn);
+  // const isLogedIn = localStorage.getItem("log");
   const primium = useSelector((state) => state.theme.premium);
-  const displayName = useSelector((state) => state.auth.displayName);
+  // const displayName = useSelector((state) => state.auth.user.displayName);
   const togglebtn = useSelector((state) => state.theme.togglebtn);
   const toggle = useSelector((state) => state.theme.toggle);
   const expenses = useSelector((state) => state.expense.expenses);
+  // const verified = useSelector((state) => state.auth.user.emailVerified);
+  const notification = useSelector((state) => state.theme.Notification);
+  const verified = localStorage.getItem("verified");
   const dispatch = useDispatch();
 
+  console.log("Navbar Running...");
   const expenseList = expenses
     .map((e) => {
       return [e.description, e.category, e.amount];
@@ -29,6 +38,7 @@ const Navbar = () => {
 
   const themeHandler = () => {
     dispatch(themeActions.showToggle());
+    localStorage.setItem(localStorage.getItem("email") + "theme", true);
   };
 
   const togglehemeHandler = () => {
@@ -37,7 +47,9 @@ const Navbar = () => {
   return (
     <nav
       className={"navbar navbar-expand-lg navbar-dark  text-white shadow"}
-      style={{ backgroundColor: "#e63838" }}
+      style={{
+        background: "linear-gradient(to right, #141e30 , #43cea2 )",
+      }}
     >
       <div className="container d-flex">
         <a className="navbar-brand fs-2 " href="#home">
@@ -59,28 +71,15 @@ const Navbar = () => {
           id="navbarNav"
         >
           <ul className="navbar-nav">
-            {isLogedIn && !displayName && (
-              <li className="nav-item ms-4  rounded">
-                <Link to="/updateProfile" className="nav-link fs-5 ">
-                  Complete profile
-                </Link>
-              </li>
-            )}
-            {isLogedIn && displayName && (
+            {/* {isLogedIn && displayName && (
               <li className="nav-item ms-4  rounded">
                 <Link to="/updateProfile" className="nav-link fs-5 ">
                   Update profile
                 </Link>
               </li>
-            )}
-            {isLogedIn && (
-              <li className="nav-item ms-4 ">
-                <button className="btn fs-5 text-white" onClick={logoutHandler}>
-                  Logout
-                </button>
-              </li>
-            )}
-            {primium && isLogedIn && (
+            )} */}
+
+            {primium && isLogedIn && !notification && (
               <li className="nav-item ms-4">
                 <button
                   className="btn fs-5 "
@@ -91,30 +90,42 @@ const Navbar = () => {
                 </button>
               </li>
             )}
-            {primium && togglebtn && isLogedIn && (
+            {primium && togglebtn && isLogedIn && !notification && (
               <li className="nav-item ms-4">
                 <button
-                  className={
-                    toggle
-                      ? "btn fs-5 bg-dark text-light "
-                      : "btn fs-5 bg-light text-secondary "
-                  }
+                  className={toggle ? "btn   text-light " : "btn   text-dark "}
                   onClick={togglehemeHandler}
                 >
-                  {toggle ? "Light" : "Dark "}
+                  {/* {toggle ? "Light" : "Dark "} */}
+                  <CgDarkMode size={"30px"} />
                 </button>
               </li>
             )}
 
-            {isLogedIn && (
+            {isLogedIn && verified && !notification && (
               <li className="nav-item ms-4 ">
                 <a
-                  className="btn btn-primary fs-5 text-white"
+                  className="btn  fs-5 text-white"
                   download="file.csv"
                   href={ref}
                 >
-                  Download
+                  <HiDownload size={"30px"} />
                 </a>
+              </li>
+            )}
+            {isLogedIn && verified && !notification && (
+              <li className="nav-item ms-4 ">
+                <button className="btn fs-5 text-white" onClick={logoutHandler}>
+                  <RiLogoutCircleRLine size={"30px"} />
+                </button>
+              </li>
+            )}
+
+            {isLogedIn && verified && !notification && (
+              <li className="nav-item ms-4  rounded">
+                <Link to="/updateProfile" className="nav-link fs-5 ">
+                  <CgProfile size={"30px"} />
+                </Link>
               </li>
             )}
           </ul>
@@ -124,4 +135,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);
