@@ -24,11 +24,19 @@ const Home = () => {
   return (
     <Fragment>
       <Navbar />
-      {/* {!verified && <VerifyEmail />} */}
       {notification && <Notification />}
       {!notification && (
-        <div>
-          {" "}
+        <div
+          style={{
+            display: "flex",
+            width: "100vw",
+            height: "90vh",
+            padding: "50px",
+            // backgroundColor: "white",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
           <ExpenseForm />
           {show && <EditExpense></EditExpense>}
           <Expenses></Expenses>

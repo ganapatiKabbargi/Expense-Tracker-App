@@ -6,7 +6,7 @@ import PasswordReset from "./components/AuthForm/PasswordReset";
 import Login from "./components/AuthForm/Signup";
 import VerifyEmail from "./components/AuthForm/VerifyEmail";
 import Home from "./components/pages/Home";
-import UpdateProfile from "./components/UpdateProfile";
+import UpdateProfile from "./components/AuthForm/UpdateProfile";
 import { themeActions } from "./store/themeSlice";
 import { fetchDetails } from "./store/auth-actions";
 
@@ -46,9 +46,11 @@ function App() {
             <VerifyEmail />
           </Route>
         )}
-        <Route path="/home">
-          <Home />
-        </Route>
+        {isLogedIn && verified && (
+          <Route path="/home">
+            <Home />
+          </Route>
+        )}
         {isLogedIn && verified && (
           <Route path="/updateProfile">
             <UpdateProfile />

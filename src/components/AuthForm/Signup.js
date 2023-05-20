@@ -1,13 +1,13 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/authSlice";
 import { themeActions } from "../../store/themeSlice";
 import Loader from "../../UI/Loader";
-import "./Signup.css";
 import ErrorModal from "../../UI/ErrorModal";
-import Notification from "../../UI/Notification";
+import "./Signup.css";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -28,12 +28,10 @@ const Login = () => {
     });
   };
 
-
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(themeActions.showLoader());
     if (isLogin) {
-
       fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCdAt2TovMTe4PkgyCuLYXvHQK7AgVi-YI",
         {
@@ -106,6 +104,8 @@ const Login = () => {
           })
           .then((data) => {
             switchAuthModeHandler();
+            setMail("");
+            setPassword("");
             console.log("user has successfully signed up");
           })
           .catch((err) => {
@@ -121,10 +121,6 @@ const Login = () => {
     }
   };
 
-  const passwordHandler = () => {
-    history.push("/password");
-  };
-
   const errorHandler = () => {
     setError("");
     history.push("/auth");
@@ -138,6 +134,7 @@ const Login = () => {
       {!loader && !error && (
         <div className={toggle ? "form-div shadow " : "form-div shadow light"}>
           <h2 className="text-center">{isLogin ? "Login" : "Sign Up"}</h2>
+
           <form onSubmit={submitHandler}>
             <div className="control">
               <label>Email</label>
@@ -164,6 +161,13 @@ const Login = () => {
                 Your Password must contain atleast 6 character
               </span>
             </div>
+            {isLogin && (
+              <div className="text-start ">
+                <Link to="/password" className="btn border-0 ps-0">
+                  Forget password?
+                </Link>
+              </div>
+            )}
             {!isLogin && (
               <div className="control">
                 <label>Confirm Password</label>
@@ -181,25 +185,14 @@ const Login = () => {
               </div>
             )}
             <div className="actions ">
-              <button
-                className="btn w-100"
-                style={{
-                  background: "linear-gradient(to left, #141e30 , #43cea2 )",
-                }}
-              >
+              <button className="border-0 w-100">
                 {isLogin ? "Login" : "SignUp"}
               </button>
             </div>
           </form>
-          {isLogin && (
-            <div className="text-center mt-4">
-              <button className="btn text-white " onClick={passwordHandler}>
-                Forget password?
-              </button>
-            </div>
-          )}
-          <div className="text-center mt-2">
-            <button className="btn text-white" onClick={switchAuthModeHandler}>
+
+          <div className="text-center mt-4">
+            <button className="btn  border-0" onClick={switchAuthModeHandler}>
               {isLogin
                 ? "Dont have an account? Signup"
                 : "Already have an account? Login"}

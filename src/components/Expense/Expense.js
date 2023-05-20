@@ -19,26 +19,28 @@ const Expense = (props) => {
   return (
     <Fragment>
       <li
-        className="d-flex justify-content-between w-100 m-auto my-2 p-2 rounded shadow text-white fs-5"
+        className="d-flex justify-content-between w-100 mx-auto  px-2   fs-5"
         style={{
-          background: "linear-gradient(to top left, #141e30 , #243b55 )",
+          margin: "10px 0px",
+          borderLeft: "4px solid #43cea2",
         }}
       >
-        <div className=" ms-2" style={{ width: "200px" }}>
-          {props.description}
+        <div className=" ms-2 fw-bold" style={{ width: "100px" }}>
+          <div style={{ fontWeight: "600", color: "#43aea2" }}>
+            {props.description}
+          </div>
+          <div style={{ fontSize: "13px", fontWeight: "600", color: "white" }}>
+            {props.category}
+          </div>
         </div>
-        <div className="ms-5" style={{ width: "200px" }}>
-          {props.category}
-        </div>
-        <div className="ms-5" style={{ width: "200px" }}>
-          {props.amount}
-        </div>
+
+        <div style={{ width: "100px", color: "white" }}>{props.amount}</div>
         <div>
           <button className="btn text-success me-2" onClick={editHandler}>
             <FaEdit size={"23px"} />
           </button>
           <button
-            className="btn  me-2 "
+            className="btn  me-2 border-0"
             style={{ color: " #e63838" }}
             onClick={removeHandler}
           >

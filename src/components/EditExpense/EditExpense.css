@@ -4,9 +4,7 @@
   max-width: 25rem;
   border-radius: 6px;
   background: linear-gradient(to right, #141e30, #243b55);
-
   padding: 1rem;
-
   color: white;
   position: absolute;
   top: 40%;
@@ -17,7 +15,6 @@
 
 .auth h1 {
   text-align: center;
-  /* color: white; */
 }
 
 .contro {
@@ -26,7 +23,6 @@
 
 .contro label {
   display: block;
-  /* color: white; */
   font-weight: bold;
   margin-bottom: 0.5rem;
 }

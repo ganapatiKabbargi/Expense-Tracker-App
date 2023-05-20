@@ -2,7 +2,7 @@ import React, { Fragment, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
-import "./Signup.css";
+import "./PasswordReset.css";
 const PasswordReset = () => {
   const [loading, setLoading] = useState(false);
   const toggle = useSelector((state) => state.theme.toggle);
@@ -51,22 +51,33 @@ const PasswordReset = () => {
   return (
     <Fragment>
       <Navbar />
-      <div className={toggle ? "form-div shadow " : "form-div shadow light"}>
-        <div className="d-flex justify-content-between mb-5">
-          <h2>Reset Password</h2>
-          <button className="btn  fs-4" onClick={clickHandler}>
-            X
-          </button>
-        </div>
-        <form onSubmit={submitHandler}>
-          <div className="control">
-            <label className="text-white">Enter Your Registered Email</label>
-            <input type="email" required ref={inputEmailRef} />
+      <div className="contain">
+        <div className="popup">
+          <div className="text-end ">
+            <button className="back" onClick={clickHandler}>
+              X
+            </button>
           </div>
-          <button className="btn shadow text-white w-100">
-            {loading ? "sending Link to mail" : "Reset Password"}
-          </button>
-        </form>
+          <form className="formm" onSubmit={submitHandler}>
+            <div className="note">
+              <label className="title">Forgot your password?</label>
+              <span className="subtitle">
+                Enter your email and submit you will get link to change your
+                password
+              </span>
+            </div>
+            <input
+              placeholder="Enter your e-mail"
+              title="Enter your e-mail"
+              name="email"
+              type="email"
+              className="input_field"
+              required
+              ref={inputEmailRef}
+            />
+            <button className="submit">submit</button>
+          </form>
+        </div>
       </div>
     </Fragment>
   );

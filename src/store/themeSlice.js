@@ -32,6 +32,10 @@ const themeSlice = createSlice({
     hideNotification(state) {
       state.Notification = false;
     },
+    logout(state) {
+      state.premium = false;
+      state.togglebtn = false;
+    },
   },
 });
 

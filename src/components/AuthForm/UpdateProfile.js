@@ -1,8 +1,8 @@
 import React, { Fragment, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import Navbar from "./Navbar/Navbar";
-import { fetchDetails } from "../store/auth-actions";
+import Navbar from "../Navbar/Navbar";
+import { fetchDetails } from "../../store/auth-actions";
 import { FaUserEdit } from "react-icons/fa";
 import { ImHome } from "react-icons/im";
 import { FiUpload } from "react-icons/fi";
@@ -67,13 +67,8 @@ const UpdateProfile = () => {
   return (
     <Fragment>
       <Navbar />
-      <div className="d-flex">
-        <div
-          className="mt-5 ms-5 text-light p-4 rounded shadow "
-          style={{
-            background: "linear-gradient(to right, #73e8c9 , #373b44 )",
-          }}
-        >
+      <div className="d-flex " style={{ height: "90vh" }}>
+        <div className="my-5 ms-5  p-4 rounded border bg-light ">
           <img
             src={
               photo
@@ -84,17 +79,17 @@ const UpdateProfile = () => {
             style={{ borderRadius: "50%", height: "300px", width: "300px" }}
             className="ms-4"
           ></img>
-          <h2 className="text-center mt-5">{displayName}</h2>
+          <h2 className="text-center mt-5 text-dark">{displayName}</h2>
           <button
             onClick={() => {
               setUpdate(true);
             }}
-            className="btn w-100 mt-2 p-2 border border-success text-light fs-5 fw-bold"
+            className="btn btn-primary w-100 mt-2 p-2 rounded-0  fs-5  text-light"
           >
             Update Profile <FaUserEdit size={"30px"} className="ms-4" />
           </button>
           <button
-            className="btn w-100 mt-2 p-2 border border-success text-light fs-5 "
+            className="btn w-100 mt-2 p-2 border border-success rounded-0 fs-5 "
             onClick={clickHandler}
           >
             Home <ImHome size={"30px"} className="ms-4" />
@@ -102,12 +97,7 @@ const UpdateProfile = () => {
         </div>
 
         {update && (
-          <div
-            className="bg-light w-50 h-50 mt-5 mx-auto p-4 shadow rounded text-light "
-            style={{
-              background: "linear-gradient( to  left , #73e8c9 , #373b44 )",
-            }}
-          >
+          <div className="bg-light w-50 h-50 mt-5 mx-auto p-4 border rounded  bg-light">
             <form onSubmit={submitHandler}>
               <div className="d-flex justify-content-between ">
                 <h2>Update Profile Details</h2>

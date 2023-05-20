@@ -8,8 +8,6 @@ import Loader from "../../UI/Loader";
 const VerifyEmail = () => {
   const token = useSelector((state) => state.auth.bearerToken);
   const verified = useSelector((state) => state.auth.user.emailVerified);
-  // const verified = localStorage.getItem("verified");
-  // const email = useSelector((state) => state.auth.email);
   const loader = useSelector((state) => state.theme.loader);
   const history = useHistory();
   const dispatch = useDispatch();

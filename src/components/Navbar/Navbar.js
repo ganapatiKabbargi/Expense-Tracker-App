@@ -11,15 +11,12 @@ import { HiDownload } from "react-icons/hi";
 const Navbar = () => {
   const history = useHistory();
   const isLogedIn = useSelector((state) => state.auth.isLogedIn);
-  // const isLogedIn = localStorage.getItem("log");
   const primium = useSelector((state) => state.theme.premium);
-  // const displayName = useSelector((state) => state.auth.user.displayName);
   const togglebtn = useSelector((state) => state.theme.togglebtn);
   const toggle = useSelector((state) => state.theme.toggle);
   const expenses = useSelector((state) => state.expense.expenses);
-  // const verified = useSelector((state) => state.auth.user.emailVerified);
   const notification = useSelector((state) => state.theme.Notification);
-  const verified = localStorage.getItem("verified");
+  const verified = useSelector((state) => state.auth.user.emailVerified);
   const dispatch = useDispatch();
 
   console.log("Navbar Running...");
@@ -33,6 +30,7 @@ const Navbar = () => {
 
   const logoutHandler = () => {
     dispatch(authActions.logout());
+    dispatch(themeActions.logout());
     history.replace("/auth");
   };
 
@@ -71,14 +69,6 @@ const Navbar = () => {
           id="navbarNav"
         >
           <ul className="navbar-nav">
-            {/* {isLogedIn && displayName && (
-              <li className="nav-item ms-4  rounded">
-                <Link to="/updateProfile" className="nav-link fs-5 ">
-                  Update profile
-                </Link>
-              </li>
-            )} */}
-
             {primium && isLogedIn && !notification && (
               <li className="nav-item ms-4">
                 <button
@@ -93,10 +83,13 @@ const Navbar = () => {
             {primium && togglebtn && isLogedIn && !notification && (
               <li className="nav-item ms-4">
                 <button
-                  className={toggle ? "btn   text-light " : "btn   text-dark "}
+                  className={
+                    toggle
+                      ? "btn   text-light border-0"
+                      : "btn   text-dark border-0"
+                  }
                   onClick={togglehemeHandler}
                 >
-                  {/* {toggle ? "Light" : "Dark "} */}
                   <CgDarkMode size={"30px"} />
                 </button>
               </li>
@@ -115,7 +108,10 @@ const Navbar = () => {
             )}
             {isLogedIn && verified && !notification && (
               <li className="nav-item ms-4 ">
-                <button className="btn fs-5 text-white" onClick={logoutHandler}>
+                <button
+                  className="btn fs-5 text-white border-0"
+                  onClick={logoutHandler}
+                >
                   <RiLogoutCircleRLine size={"30px"} />
                 </button>
               </li>
