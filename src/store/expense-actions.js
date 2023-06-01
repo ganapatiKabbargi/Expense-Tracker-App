@@ -5,9 +5,9 @@ export const fetchExpenseFromFirebase = (email) => {
   console.log(email);
   return async (dispatch) => {
     try {
-      dispatch(themeActions.showLoader());
+      // dispatch(themeActions.showLoader());
       const response = await fetch(
-        `https://expense-tracker-app-c1167-default-rtdb.firebaseio.com/${email}.json`
+        `https://expense-tracker-app-a3c25-default-rtdb.firebaseio.com/${email}.json`
       );
       if (!response.ok) {
         throw new Error("Something went wrong");
@@ -24,7 +24,7 @@ export const fetchExpenseFromFirebase = (email) => {
         });
       }
       dispatch(expenseActions.addExpense(fetchedExpenses));
-      dispatch(themeActions.hideLoader());
+      // dispatch(themeActions.hideLoader());
     } catch (err) {
       alert(err.message);
     }
@@ -35,7 +35,7 @@ export const addExpenseToFirebase = (expense, email) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `https://expense-tracker-app-c1167-default-rtdb.firebaseio.com/${email}.json`,
+        `https://expense-tracker-app-a3c25-default-rtdb.firebaseio.com/${email}.json`,
         {
           method: "POST",
           body: JSON.stringify(expense),
@@ -58,7 +58,7 @@ export const removeExpenseFromFirebase = (id, email) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `https://expense-tracker-app-c1167-default-rtdb.firebaseio.com/${email}/${id}.json`,
+        `https://expense-tracker-app-a3c25-default-rtdb.firebaseio.com/${email}/${id}.json`,
         {
           method: "DELETE",
         }
@@ -78,7 +78,7 @@ export const editExpenseInFirebase = (expense, email, id) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `https://expense-tracker-app-c1167-default-rtdb.firebaseio.com/${email}/${id}.json`,
+        `https://expense-tracker-app-a3c25-default-rtdb.firebaseio.com/${email}/${id}.json`,
         {
           method: "PUT",
           body: JSON.stringify(expense),
@@ -89,9 +89,25 @@ export const editExpenseInFirebase = (expense, email, id) => {
       );
       if (response.ok) {
         dispatch(fetchExpenseFromFirebase(email));
+        dispatch(expenseActions.setExpense(""));
       }
     } catch (err) {
       alert(err.message);
+    }
+  };
+};
+
+export const fetchExpenseToBeEdited = (email, id) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `https://expense-tracker-app-a3c25-default-rtdb.firebaseio.com/${email}/${id}.json`
+      );
+      const data = await response.json();
+      console.log(data);
+      dispatch(expenseActions.setExpense(data));
+    } catch (e) {
+      alert(e.message);
     }
   };
 };

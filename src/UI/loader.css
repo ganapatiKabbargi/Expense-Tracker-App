@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   height: 8em;
+  margin-top: 200px;
 }
 
 .loading-spinner-inner {

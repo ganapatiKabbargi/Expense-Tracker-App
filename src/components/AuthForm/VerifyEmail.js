@@ -20,7 +20,7 @@ const VerifyEmail = () => {
 
   const clickHandler = () => {
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCdAt2TovMTe4PkgyCuLYXvHQK7AgVi-YI",
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBKu_J8l9H1KEhlufO9aDwiHKfD5hy35OM",
       {
         method: "POST",
         body: JSON.stringify({

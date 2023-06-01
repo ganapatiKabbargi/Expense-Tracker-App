@@ -29,6 +29,8 @@ const Navbar = () => {
   const ref = URL.createObjectURL(blob);
 
   const logoutHandler = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
     dispatch(authActions.logout());
     dispatch(themeActions.logout());
     history.replace("/auth");

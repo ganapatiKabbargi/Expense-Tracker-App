@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import EditExpense from "../EditExpense/EditExpense";
 import ExpenseForm from "../ExpenseForm/ExpenseForm";
 import Expenses from "../Expenses/Expenses";
 import Navbar from "../Navbar/Navbar";
@@ -38,7 +37,6 @@ const Home = () => {
           }}
         >
           <ExpenseForm />
-          {show && <EditExpense></EditExpense>}
           <Expenses></Expenses>
         </div>
       )}

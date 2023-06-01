@@ -33,7 +33,7 @@ const Login = () => {
     dispatch(themeActions.showLoader());
     if (isLogin) {
       fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCdAt2TovMTe4PkgyCuLYXvHQK7AgVi-YI",
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBKu_J8l9H1KEhlufO9aDwiHKfD5hy35OM",
         {
           method: "POST",
           body: JSON.stringify({
@@ -60,6 +60,8 @@ const Login = () => {
         })
         .then((data) => {
           console.log(data);
+          localStorage.setItem("email", mail.replace(/[.]/g, ""));
+          localStorage.setItem("token", data.idToken);
           dispatch(authActions.login({ idToken: data.idToken, email: mail }));
           history.replace("/verify");
           dispatch(themeActions.hideLoader());
@@ -77,7 +79,7 @@ const Login = () => {
     } else {
       if (password === confirmPassword) {
         fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCdAt2TovMTe4PkgyCuLYXvHQK7AgVi-YI",
+          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBKu_J8l9H1KEhlufO9aDwiHKfD5hy35OM",
           {
             method: "POST",
             body: JSON.stringify({

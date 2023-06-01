@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap");
+.section {
+  padding: 10px;
+  border-radius: 2px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  background-color: white;
+  font-family: "Merriweather", serif;
+}
+.wallet {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 10px 0px;
+}
+.wallet_heading {
+  font-size: 23px;
+  border-bottom: 2px solid grey;
+  margin-bottom: 16px;
+}
+.balance {
+  color: green;
+  border-left: 5px solid green;
+  padding: 0px 5px;
+  margin: 10px 0px;
+  width: 200px;
+  display: inline-block;
+}
+.expense {
+  color: #d62a2a;
+  border-left: 5px solid #d62a2a;
+  padding: 0px 5px;
+  display: inline-block;
+}
+.progress {
+  border: 1px solid green;
+  border-radius: 4px;
+  margin: 10px 0px;
+}
+.progress_bar {
+  height: 8px;
+  display: "block";
+}

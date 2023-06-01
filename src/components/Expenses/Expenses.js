@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { themeActions } from "../../store/themeSlice";
 import Expense from "../Expense/Expense";
 import Loader from "../../UI/Loader";
+import Wallet from "../Wallet/Wallet";
 
 const Expenses = () => {
   const expenses = useSelector((state) => state.expense.expenses);
@@ -13,7 +14,7 @@ const Expenses = () => {
   let expenseList;
   expenseList = expenses.length === 0 ? false : true;
   let total = 0;
-  let balance = 50000;
+  // let balance = 50000;
 
   let expensess = expenses.map((expense) => {
     total = total + +expense.amount;
@@ -53,57 +54,7 @@ const Expenses = () => {
           // borderRadius: "10px",
         }}
       >
-        <section
-          style={{
-            padding: "10px",
-            borderRadius: "10px",
-            boxShadow: "0px 4px 8px rgba(0,0,0,.3)",
-            backgroundColor: "white",
-          }}
-        >
-          <div
-            style={{
-              fontSize: "20px",
-              fontWeight: "600",
-              margin: "20px 0px",
-            }}
-          >
-            <div
-              style={{
-                color: "green",
-                borderLeft: "5px solid green",
-                padding: "0px 5px",
-                margin: "10px 0px",
-              }}
-            >
-              Balance : {balance - total}
-            </div>
-            <div
-              style={{
-                color: "#d62a2a",
-                borderLeft: "5px solid #d62a2a",
-                padding: "0px 5px",
-              }}
-            >
-              TotalExpense : {total}
-            </div>
-          </div>
-          <div
-            style={{
-              border: "1px solid green",
-              borderRadius: "4px",
-            }}
-          >
-            <span
-              style={{
-                height: "8px",
-                width: `${total / 500}%`,
-                backgroundColor: `${color}`,
-                display: "block",
-              }}
-            ></span>
-          </div>
-        </section>
+        <Wallet total={total} color={color} />
         <section
           style={{
             padding: "10px",

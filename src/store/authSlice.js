@@ -20,12 +20,12 @@ const authSlice = createSlice({
       state.isLogedIn = true;
       state.bearerToken = action.payload.idToken;
       state.email = action.payload.email.replace(/[.]/g, "");
-      localStorage.setItem("email", action.payload.email.replace(/[.]/g, ""));
-      localStorage.setItem("token", action.payload.idToken);
+      // localStorage.setItem("email", action.payload.email.replace(/[.]/g, ""));
+      // localStorage.setItem("token", action.payload.idToken);
     },
     logout(state) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("email");
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("email");
       state.bearerToken = null;
       state.email = "";
       state.user = {};

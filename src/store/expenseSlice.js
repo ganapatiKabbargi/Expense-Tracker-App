@@ -4,6 +4,7 @@ const initialExpenseState = {
   expenses: [],
   showForm: false,
   id: "",
+  expense: "",
 };
 const expenseSlice = createSlice({
   name: "expense",
@@ -21,6 +22,9 @@ const expenseSlice = createSlice({
     },
     setId(state, action) {
       state.id = action.payload;
+    },
+    setExpense(state, action) {
+      state.expense = action.payload;
     },
   },
 });

@@ -6,7 +6,7 @@ export const fetchDetails = (token) => {
     try {
       dispatch(themeActions.showLoader());
       const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCdAt2TovMTe4PkgyCuLYXvHQK7AgVi-YI",
+        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBKu_J8l9H1KEhlufO9aDwiHKfD5hy35OM",
         {
           method: "POST",
           body: JSON.stringify({

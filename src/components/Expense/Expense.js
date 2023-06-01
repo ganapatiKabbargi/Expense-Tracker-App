@@ -1,7 +1,10 @@
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { expenseActions } from "../../store/expenseSlice";
-import { removeExpenseFromFirebase } from "../../store/expense-actions";
+import {
+  fetchExpenseToBeEdited,
+  removeExpenseFromFirebase,
+} from "../../store/expense-actions";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 const Expense = (props) => {
@@ -13,8 +16,9 @@ const Expense = (props) => {
   };
 
   const editHandler = () => {
-    dispatch(expenseActions.showEditForm());
+    // dispatch(expenseActions.showEditForm());
     dispatch(expenseActions.setId(props.id));
+    dispatch(fetchExpenseToBeEdited(email, props.id));
   };
   return (
     <Fragment>
@@ -36,7 +40,10 @@ const Expense = (props) => {
 
         <div style={{ width: "100px", color: "white" }}>{props.amount}</div>
         <div>
-          <button className="btn text-success me-2" onClick={editHandler}>
+          <button
+            className="btn text-success me-2 border-0"
+            onClick={editHandler}
+          >
             <FaEdit size={"23px"} />
           </button>
           <button
